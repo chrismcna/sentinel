@@ -25,19 +25,19 @@ Update system packages and ensure virtualenv is installed:
 
 Make sure the local Chaincoin daemon running is at least version 0.16.x
 
-    $ chaincoin-cli getinfo | grep version
+    $ chaincoin-cli getnetworkinfo | grep version
 
 ### 2. Install Sentinel
 
 Clone the Sentinel repo and install Python dependencies:
 
-    $ git pull
-    $ rm -rf venv && virtualenv ./venv && ./venv/bin/pip install -r requirements.txt
+    $ git clone https://github.com/chaincoin/sentinel.git && cd sentinel
+    $ virtualenv ./venv && ./venv/bin/pip install -r requirements.txt   
 
 When just upgrading, also remove the virtual environment:
-
-    $ git clone https://github.com/chaincoin/sentinel.git && cd sentinel
-    $ virtualenv ./venv && ./venv/bin/pip install -r requirements.txt
+    
+    $ git pull
+    $ rm -rf venv && virtualenv ./venv && ./venv/bin/pip install -r requirements.txt
 
 ### 3. Set up Cron
 
@@ -71,11 +71,11 @@ To view debug output, set the `SENTINEL_DEBUG` environment variable to anything 
 
 ## Contributing
 
-Please follow the [ChaincoinCore guidelines for contributing](https://github.com/chaincoinpay/chaincoin/blob/v0.12.1.x/CONTRIBUTING.md).
+Please follow the [Chaincoin Core guidelines for contributing](https://github.com/chaincoin/chaincoin/blob/Chaincoin_0.16-dev/CONTRIBUTING.md).
 
 Specifically:
 
-* [Contributor Workflow](https://github.com/chaincoinpay/chaincoin/blob/v0.12.2.x/CONTRIBUTING.md#contributor-workflow)
+* [Contributor Workflow](https://github.com/chaincoin/chaincoin/blob/Chaincoin_0.16-dev/CONTRIBUTING.md#contributor-workflow)
 
     To contribute a patch, the workflow is as follows:
 
