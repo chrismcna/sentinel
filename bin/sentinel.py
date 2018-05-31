@@ -70,12 +70,12 @@ def attempt_superblock_creation(chaincoind):
         printdbg("Not in maturity phase yet -- will not attempt Superblock")
         return
 
-    proposals = Proposal.approved_and_ranked(proposal_quorum=chaincoind.governance_quorum(), next_superblock_max_budget=chaincoind.next_superblock_max_budget())
+    proposals = Proposal.approved_and_ranked(chaincoind, proposal_quorum=chaincoind.governance_quorum(), next_superblock_max_budget=chaincoind.next_superblock_max_budget())
     budget_max = chaincoind.get_superblock_budget_allocation(event_block_height)
     sb_epoch_time = chaincoind.block_height_to_epoch(event_block_height)
 
     maxgovobjdatasize = chaincoind.govinfo['maxgovobjdatasize']
-    sb = chaincoinlib.create_superblock(chaincoind, proposals, event_block_height, budget_max, sb_epoch_time, maxgovobjdatasize)
+    sb = chaincoinlib.create_superblock(proposals, event_block_height, budget_max, sb_epoch_time, maxgovobjdatasize)
     if not sb:
         printdbg("No superblock created, sorry. Returning.")
         return
