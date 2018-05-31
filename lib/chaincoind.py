@@ -47,6 +47,19 @@ class ChaincoinDaemon():
 
     # common RPC convenience methods
 
+    def validate_address(self, address):
+
+        valid = False
+
+        try:
+            output = self.rpc_command('validateaddress', address).get('isvalid')
+            valid = (output['true'] and not output['false'])
+        except JSONRPCException as e:
+            pass
+
+        return valid
+
+
     def get_masternodes(self):
         mnlist = self.rpc_command('masternodelist', 'full')
         return [Masternode(k, v) for (k, v) in mnlist.items()]
