@@ -68,12 +68,7 @@ def test_valid_chaincoin_address():
     test = valid_chaincoin_address('testnet')
 
     assert is_valid_chaincoin_address(main) is True
-    assert is_valid_chaincoin_address(main, 'mainnet') is True
-    assert is_valid_chaincoin_address(main, 'testnet') is False
-
-    assert is_valid_chaincoin_address(test) is False
-    assert is_valid_chaincoin_address(test, 'mainnet') is False
-    assert is_valid_chaincoin_address(test, 'testnet') is True
+    assert is_valid_chaincoin_address(test) is True
 
 
 def test_invalid_chaincoin_address():
@@ -83,12 +78,7 @@ def test_invalid_chaincoin_address():
     test = invalid_chaincoin_address('testnet')
 
     assert is_valid_chaincoin_address(main) is False
-    assert is_valid_chaincoin_address(main, 'mainnet') is False
-    assert is_valid_chaincoin_address(main, 'testnet') is False
-
     assert is_valid_chaincoin_address(test) is False
-    assert is_valid_chaincoin_address(test, 'mainnet') is False
-    assert is_valid_chaincoin_address(test, 'testnet') is False
 
 
 def test_deterministic_masternode_elections(current_block_hash, mn_list):
