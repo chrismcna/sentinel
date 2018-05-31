@@ -8,37 +8,13 @@ import re
 from decimal import Decimal
 import simplejson
 import binascii
+import chaincoind
 from misc import printdbg, epoch2str
 import time
 
 
-def is_valid_chaincoin_address(address, network='mainnet'):
-    # Only public key addresses are allowed
-    # A valid address is a RIPEMD-160 hash which contains 20 bytes
-    # Prior to base58 encoding 1 version byte is prepended and
-    # 4 checksum bytes are appended so the total number of
-    # base58 encoded bytes should be 25.  This means the number of characters
-    # in the encoding should be about 34 ( 25 * log2( 256 ) / log2( 58 ) ).
-    chaincoin_version = 80 if network == 'testnet' else 28
-
-    # Check length (This is important because the base58 library has problems
-    # with long addresses (which are invalid anyway).
-    if ((len(address) < 26) or (len(address) > 35)):
-        return False
-
-    address_version = None
-
-    try:
-        decoded = base58.b58decode_chk(address)
-        address_version = ord(decoded[0:1])
-    except:
-        # rescue from exception, not a valid Chaincoin address
-        return False
-
-    if (address_version != chaincoin_version):
-        return False
-
-    return True
+def is_valid_chaincoin_address(address):
+    return chaincoind.validate_address(address)
 
 
 def hashit(data):
