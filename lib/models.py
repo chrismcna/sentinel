@@ -150,7 +150,7 @@ class GovernanceObject(BaseModel):
         try:
             newdikt = subdikt.copy()
             newdikt['object_hash'] = object_hash
-            if subclass(**newdikt).is_valid() is False:
+            if subclass(**newdikt).is_valid(chaincoind) is False:
                 govobj.vote_delete(chaincoind)
                 return (govobj, None)
 
@@ -284,8 +284,7 @@ class Proposal(GovernanceClass, BaseModel):
     class Meta:
         db_table = 'proposals'
 
-    def is_valid(self):
-        import chaincoinlib
+    def is_valid(self, chaincoind):
 
         printdbg("In Proposal#is_valid, for Proposal: %s" % self.__dict__)
 
@@ -306,7 +305,7 @@ class Proposal(GovernanceClass, BaseModel):
                 return False
 
             # amount must be numeric
-            if misc.is_numeric(self.payment_amount) is False:
+            if not misc.is_numeric(self.payment_amount):
                 printdbg("\tProposal amount [%s] is not valid, returning False" % self.payment_amount)
                 return False
 
@@ -315,7 +314,7 @@ class Proposal(GovernanceClass, BaseModel):
                 printdbg("\tProposal amount [%s] is negative or zero, returning False" % self.payment_amount)
                 return False
 
-            # payment address is valid base58 chaincoin addr, non-multisig
+            # payment address is valid chaincoin addr
             if not chaincoind.validate_address(self.payment_address):
                 printdbg("\tPayment address [%s] not a valid Chaincoin address for network [%s], returning False" % (self.payment_address, config.network))
                 return False
@@ -380,7 +379,7 @@ class Proposal(GovernanceClass, BaseModel):
         return False
 
     @classmethod
-    def approved_and_ranked(self, proposal_quorum, next_superblock_max_budget):
+    def approved_and_ranked(self, chaincoind, proposal_quorum, next_superblock_max_budget):
         # return all approved proposals, in order of descending vote count
         #
         # we need a secondary 'order by' in case of a tie on vote count, since
@@ -395,7 +394,7 @@ class Proposal(GovernanceClass, BaseModel):
         ranked = []
         for proposal in query:
             proposal.max_budget = next_superblock_max_budget
-            if proposal.is_valid():
+            if proposal.is_valid(chaincoind):
                 ranked.append(proposal)
 
         return ranked
@@ -436,8 +435,7 @@ class Superblock(BaseModel, GovernanceClass):
     class Meta:
         db_table = 'superblocks'
 
-    def is_valid(self):
-        import chaincoinlib
+    def is_valid(self, chaincoind):
         import decimal
 
         printdbg("In Superblock#is_valid, for SB: %s" % self.__dict__)
