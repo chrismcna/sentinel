@@ -62,23 +62,23 @@ def mn_status_bad():
 
 
 def test_valid_chaincoin_address():
-    from chaincoinlib import is_valid_chaincoin_address
+    from chaincoind import validate_address
 
     main = valid_chaincoin_address()
     test = valid_chaincoin_address('testnet')
 
-    assert is_valid_chaincoin_address(main) is True
-    assert is_valid_chaincoin_address(test) is True
+    assert validate_address(main) is True
+    assert validate_address(test) is True
 
 
 def test_invalid_chaincoin_address():
-    from chaincoinlib import is_valid_chaincoin_address
+    from chaincoind import validate_address
 
     main = invalid_chaincoin_address()
     test = invalid_chaincoin_address('testnet')
 
-    assert is_valid_chaincoin_address(main) is False
-    assert is_valid_chaincoin_address(test) is False
+    assert validate_address(main) is False
+    assert validate_address(test) is False
 
 
 def test_deterministic_masternode_elections(current_block_hash, mn_list):

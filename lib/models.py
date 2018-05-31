@@ -316,7 +316,7 @@ class Proposal(GovernanceClass, BaseModel):
                 return False
 
             # payment address is valid base58 chaincoin addr, non-multisig
-            if not chaincoinlib.is_valid_chaincoin_address(self.payment_address):
+            if not chaincoind.validate_address(self.payment_address):
                 printdbg("\tPayment address [%s] not a valid Chaincoin address for network [%s], returning False" % (self.payment_address, config.network))
                 return False
 
@@ -445,7 +445,7 @@ class Superblock(BaseModel, GovernanceClass):
         # it's a string from the DB...
         addresses = self.payment_addresses.split('|')
         for addr in addresses:
-            if not chaincoinlib.is_valid_chaincoin_address(addr):
+            if not chaincoind.validate_address(addr):
                 printdbg("\tInvalid address [%s], returning False" % addr)
                 return False
 

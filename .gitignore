@@ -104,3 +104,4 @@ Sentinel.config
 Sentinel.creator
 Sentinel.files
 Sentinel.includes
+*.user

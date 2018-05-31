@@ -8,13 +8,8 @@ import re
 from decimal import Decimal
 import simplejson
 import binascii
-import chaincoind
 from misc import printdbg, epoch2str
 import time
-
-
-def is_valid_chaincoin_address(address):
-    return chaincoind.validate_address(address)
 
 
 def hashit(data):
