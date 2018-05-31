@@ -89,7 +89,7 @@ class GovernanceObject(BaseModel):
 
         for item in golist.values():
             try:
-                (go, subobj) = self.import_gobject_from_chaicoind(chaincoind, item)
+                (go, subobj) = self.import_gobject_from_chaincoind(chaincoind, item)
             except Exception as e:
                 printdbg("Got an error upon import: %s" % e)
 
