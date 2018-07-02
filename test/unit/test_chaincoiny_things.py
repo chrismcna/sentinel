@@ -65,8 +65,9 @@ def test_valid_chaincoin_address():
     from chaincoind import ChaincoinDaemon
     chaincoind = ChaincoinDaemon.from_chaincoin_conf(config.chaincoin_conf)
 
-    #address = valid_chaincoin_address('testnet')
-    address = valid_chaincoin_address()
+    #address = valid_chaincoin_address()
+    address = valid_chaincoin_address('testnet')
+
 
     assert chaincoind.validate_address(address) is True
 
