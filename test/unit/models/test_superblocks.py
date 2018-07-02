@@ -129,89 +129,89 @@ def test_superblock_is_valid(superblock):
     orig = Superblock(**superblock.get_dict())  # make a copy
 
     # original as-is should be valid
-    assert orig.is_valid() is True
+    assert orig.is_valid(chaincoind) is True
 
     # mess with payment amounts
     superblock.payment_amounts = '7|yyzx'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.payment_amounts = '7,|yzx'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.payment_amounts = '7|8'
-    assert superblock.is_valid() is True
+    assert superblock.is_valid(chaincoind) is True
 
     superblock.payment_amounts = ' 7|8'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.payment_amounts = '7|8 '
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.payment_amounts = ' 7|8 '
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     # reset
     superblock = Superblock(**orig.get_dict())
-    assert superblock.is_valid() is True
+    assert superblock.is_valid(chaincoind) is True
 
     # mess with payment addresses
     superblock.payment_addresses = 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz|1234 Anywhere ST, Chicago, USA'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     # leading spaces in payment addresses
     superblock.payment_addresses = ' yTC62huR4YQEPn9AJHjnQxxreHSbgAoatV'
     superblock.payment_amounts = '5.00'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     # trailing spaces in payment addresses
     superblock.payment_addresses = 'yTC62huR4YQEPn9AJHjnQxxreHSbgAoatV '
     superblock.payment_amounts = '5.00'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     # leading & trailing spaces in payment addresses
     superblock.payment_addresses = ' yTC62huR4YQEPn9AJHjnQxxreHSbgAoatV '
     superblock.payment_amounts = '5.00'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     # single payment addr/amt is ok
     superblock.payment_addresses = 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz'
     superblock.payment_amounts = '5.00'
-    assert superblock.is_valid() is True
+    assert superblock.is_valid(chaincoind) is True
 
     # ensure number of payment addresses matches number of payments
     superblock.payment_addresses = 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz'
     superblock.payment_amounts = '37.00|23.24'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.payment_addresses = 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz|ZH6bt95skGVco2t3gRuHggcSUrtRZ5BUsr'
     superblock.payment_amounts = '37.00'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     # ensure amounts greater than zero
     superblock.payment_addresses = 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz'
     superblock.payment_amounts = '-37.00'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     # reset
     superblock = Superblock(**orig.get_dict())
-    assert superblock.is_valid() is True
+    assert superblock.is_valid(chaincoind) is True
 
     # mess with proposal hashes
     superblock.proposal_hashes = '7|yyzx'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.proposal_hashes = '7,|yyzx'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.proposal_hashes = '0|1'
-    assert superblock.is_valid() is False
+    assert superblock.is_valid(chaincoind) is False
 
     superblock.proposal_hashes = '0000000000000000000000000000000000000000000000000000000000000000|1111111111111111111111111111111111111111111111111111111111111111'
-    assert superblock.is_valid() is True
+    assert superblock.is_valid(chaincoind) is True
 
     # reset
     superblock = Superblock(**orig.get_dict())
-    assert superblock.is_valid() is True
+    assert superblock.is_valid(chaincoind) is True
 
 
 def test_serialisable_fields():
@@ -233,7 +233,7 @@ def test_deterministic_superblock_creation(go_list_proposals):
         (go, subobj) = GovernanceObject.import_gobject_from_chaincoind(chaincoind, item)
 
     max_budget = 384
-    prop_list = Proposal.approved_and_ranked(proposal_quorum=1, next_superblock_max_budget=max_budget)
+    prop_list = Proposal.approved_and_ranked(chaincoind, proposal_quorum=1, next_superblock_max_budget=max_budget)
 
     # MAX_GOVERNANCE_OBJECT_DATA_SIZE defined in governance-object.h
     maxgovobjdatasize = 16 * 1024
@@ -256,7 +256,7 @@ def test_superblock_size_limit(go_list_proposals):
         (go, subobj) = GovernanceObject.import_gobject_from_chaincoind(chaincoind, item)
 
     max_budget = 60
-    prop_list = Proposal.approved_and_ranked(proposal_quorum=1, next_superblock_max_budget=max_budget)
+    prop_list = Proposal.approved_and_ranked(chaincoind, proposal_quorum=1, next_superblock_max_budget=max_budget)
 
     # mock maxgovobjdatasize by setting equal to the size of a trigger
     # (serialized) if only the first proposal had been included... anything
