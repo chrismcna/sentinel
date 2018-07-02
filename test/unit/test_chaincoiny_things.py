@@ -3,7 +3,7 @@ import sys
 import os
 os.environ['SENTINEL_CONFIG'] = os.path.normpath(os.path.join(os.path.dirname(__file__), '../test_sentinel.conf'))
 sys.path.append(os.path.normpath(os.path.join(os.path.dirname(__file__), '../../lib')))
-
+import config
 
 @pytest.fixture
 def valid_chaincoin_address(network='mainnet'):
@@ -62,23 +62,23 @@ def mn_status_bad():
 
 
 def test_valid_chaincoin_address():
-    from chaincoind import validate_address
+    from chaincoind import ChaincoinDaemon
+    chaincoind = ChaincoinDaemon.from_chaincoin_conf(config.chaincoin_conf)
 
-    main = valid_chaincoin_address()
-    test = valid_chaincoin_address('testnet')
+    #address = valid_chaincoin_address('testnet')
+    address = valid_chaincoin_address()
 
-    assert validate_address(main) is True
-    assert validate_address(test) is True
+    assert chaincoind.validate_address(address) is True
 
 
 def test_invalid_chaincoin_address():
-    from chaincoind import validate_address
+    from chaincoind import ChaincoinDaemon
+    chaincoind = ChaincoinDaemon.from_chaincoin_conf(config.chaincoin_conf)
 
-    main = invalid_chaincoin_address()
-    test = invalid_chaincoin_address('testnet')
+    #address = invalid_chaincoin_address()
+    address = invalid_chaincoin_address('testnet')
 
-    assert validate_address(main) is False
-    assert validate_address(test) is False
+    assert chaincoind.validate_address(address) is False
 
 
 def test_deterministic_masternode_elections(current_block_hash, mn_list):
