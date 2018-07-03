@@ -173,7 +173,7 @@ def test_proposal_is_valid(proposal):
 
     # this is actually the PM-Tech multisig address on testnet...
     proposal.payment_address = 'JxwCnJUGfujha5roK4YXtHPATJsMCuR1r8'
-    assert proposal.is_valid(chaincoind) is False
+    assert proposal.is_valid(chaincoind) is True
 
     proposal.payment_address = 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz'
     assert proposal.is_valid(chaincoind) is True
