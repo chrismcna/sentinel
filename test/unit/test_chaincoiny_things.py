@@ -61,27 +61,6 @@ def mn_status_bad():
 # ========================================================================
 
 
-def test_valid_chaincoin_address():
-    from chaincoind import ChaincoinDaemon
-    chaincoind = ChaincoinDaemon.from_chaincoin_conf(config.chaincoin_conf)
-
-    #address = valid_chaincoin_address()
-    address = valid_chaincoin_address('testnet')
-
-
-    assert chaincoind.validate_address(address) is True
-
-
-def test_invalid_chaincoin_address():
-    from chaincoind import ChaincoinDaemon
-    chaincoind = ChaincoinDaemon.from_chaincoin_conf(config.chaincoin_conf)
-
-    #address = invalid_chaincoin_address()
-    address = invalid_chaincoin_address('testnet')
-
-    assert chaincoind.validate_address(address) is False
-
-
 def test_deterministic_masternode_elections(current_block_hash, mn_list):
     winner = elect_mn(block_hash=current_block_hash, mnlist=mn_list)
     assert winner == 'f68a2e5d64f4a9be7ff8d0fbd9059dcd3ce98ad7a19a9260d1d6709127ffac56-1'
