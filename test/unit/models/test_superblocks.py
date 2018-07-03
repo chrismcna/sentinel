@@ -30,7 +30,7 @@ def go_list_proposals():
         {u'AbsoluteYesCount': 1000,
          u'AbstainCount': 7,
          u'CollateralHash': u'744bb5190b9416a755517e727fbc2605ce5537c3f6e132195f09bac4bd2d691f',
-         u'DataHex': u'5b5b2270726f706f73616c222c7b22656e645f65706f6368223a313531313936353931362c226e616d65223a2267756e732d6e2d726f736573222c227061796d656e745f61646472657373223a225a484a56376a684257676142317578617a6256736e5155354855444171583134427a222c227061796d656e745f616d6f756e74223a3331352e37352c2273746172745f65706f6368223a313531313936323335312c2274797065223a312c2275726c223a22687474703a2f2f636861696e636f696e2e6f72672f70726f706f73616c2f3635343332227d5d5d',
+         u'DataHex': u'5b5b2270726f706f73616c222c207b22656e645f65706f6368223a20323132323532303430302c20226e616d65223a202267756e732d6e2d726f736573222c20227061796d656e745f61646472657373223a20225a484a56376a684257676142317578617a6256736e5155354855444171583134427a222c20227061796d656e745f616d6f756e74223a203331352e37352c202273746172745f65706f6368223a20313531313936323335312c202274797065223a20312c202275726c223a2022687474703a2f2f636861696e636f696e2e6f72672f70726f706f73616c2f3635343332227d5d5d',
          u'DataString': u'[["proposal", {"end_epoch": 2122520400, "name": "guns-n-roses", "payment_address": "ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz", "payment_amount": 315.75, "start_epoch": 1511962351, "type": 1, "url": "http://chaincoin.org/proposal/65432"}]]',
          u'Hash': u'7fa2798fee8ea74c3a369db72ae872096bd4e4714f1f5027c730ccfbf58aac02',
          u'IsValidReason': u'',
@@ -44,7 +44,7 @@ def go_list_proposals():
         {u'AbsoluteYesCount': 1000,
          u'AbstainCount': 29,
          u'CollateralHash': u'3170ed7b3a0ede65fb9ffb3068d299d6bb786a5a6527351692a44aba1f3e67b7',
-         u'DataHex': u'5b5b2270726f706f73616c222c7b22656e645f65706f6368223a313531313936383432332c226e616d65223a227069737461636368696f2d37363235222c227061796d656e745f61646472657373223a225a483662743935736b4756636f3274336752754867676353557274525a3542557372222c227061796d656e745f616d6f756e74223a32312e39352c2273746172745f65706f6368223a313531313936343835382c2274797065223a312c2275726c223a22687474703a2f2f636861696e636f696e2e6f72672f70726f706f73616c2f3636343333227d5d5d',
+         u'DataHex': u'5b5b2270726f706f73616c222c207b22656e645f65706f6368223a20323132323532303430302c20226e616d65223a20227069737461636368696f2d37363235222c20227061796d656e745f61646472657373223a20225a483662743935736b4756636f3274336752754867676353557274525a3542557372222c20227061796d656e745f616d6f756e74223a2032312e39352c202273746172745f65706f6368223a20313437343236313038362c202274797065223a20312c202275726c223a2022687474703a2f2f636861696e636f696e2e6f72672f70726f706f73616c2f3636343333227d5d5d',
          u'DataString': u'[["proposal", {"end_epoch": 2122520400, "name": "pistacchio-7625", "payment_address": "ZH6bt95skGVco2t3gRuHggcSUrtRZ5BUsr", "payment_amount": 21.95, "start_epoch": 1474261086, "type": 1, "url": "http://chaincoin.org/proposal/66433"}]]',
          u'Hash': u'd1ce73527d7cd6f2218f8ca893990bc7d5c6b9334791ce7973bfa22f155f826e',
          u'IsValidReason': u'',
@@ -240,11 +240,11 @@ def test_deterministic_superblock_creation(go_list_proposals):
     sb = chaincoinlib.create_superblock(prop_list, 72000, max_budget, misc.now(), maxgovobjdatasize)
 
     assert sb.event_block_height == 72000
-    assert sb.payment_addresses == 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz|ZH6bt95skGVco2t3gRuHggcSUrtRZ5BUsr'
-    assert sb.payment_amounts == '315.75000000|21.05000000'
-    assert sb.proposal_hashes == '7fa2798fee8ea74c3a369db72ae872096bd4e4714f1f5027c730ccfbf58aac02|d1ce73527d7cd6f2218f8ca893990bc7d5c6b9334791ce7973bfa22f155f826e'
+    assert sb.payment_addresses == 'ZH6bt95skGVco2t3gRuHggcSUrtRZ5BUsr|ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz'
+    assert sb.payment_amounts == '21.95000000|315.75000000'
+    assert sb.proposal_hashes == 'd1ce73527d7cd6f2218f8ca893990bc7d5c6b9334791ce7973bfa22f155f826e|7fa2798fee8ea74c3a369db72ae872096bd4e4714f1f5027c730ccfbf58aac02'
 
-    assert sb.hex_hash() == 'bb3f33ccf95415c396bd09d35325dbcbc7b067010d51c7ccf772a9e839c1e414'
+    assert sb.hex_hash() == 'c7dfe2d64a2b7039a54c046f000f5fbade0c66995fc2c705d5a6eb0f43f127fd'
 
 
 def test_superblock_size_limit(go_list_proposals):
@@ -255,7 +255,7 @@ def test_superblock_size_limit(go_list_proposals):
     for item in go_list_proposals:
         (go, subobj) = GovernanceObject.import_gobject_from_chaincoind(chaincoind, item)
 
-    max_budget = 60
+    max_budget = 360
     prop_list = Proposal.approved_and_ranked(chaincoind, proposal_quorum=1, next_superblock_max_budget=max_budget)
 
     # mock maxgovobjdatasize by setting equal to the size of a trigger
@@ -277,11 +277,11 @@ def test_superblock_size_limit(go_list_proposals):
 
     # only one should have been included in the SB, because the 2nd one is over the size limit
     assert sb.event_block_height == 72000
-    assert sb.payment_addresses == 'ZHJV7jhBWgaB1uxazbVsnQU5HUDAqX14Bz|ZH6bt95skGVco2t3gRuHggcSUrtRZ5BUsr'
-    assert sb.payment_amounts == '315.75000000|21.05000000'
-    assert sb.proposal_hashes == '7fa2798fee8ea74c3a369db72ae872096bd4e4714f1f5027c730ccfbf58aac02|d1ce73527d7cd6f2218f8ca893990bc7d5c6b9334791ce7973bfa22f155f826e'
+    assert sb.payment_addresses == 'ZH6bt95skGVco2t3gRuHggcSUrtRZ5BUsr'
+    assert sb.payment_amounts == '21.95000000'
+    assert sb.proposal_hashes == 'd1ce73527d7cd6f2218f8ca893990bc7d5c6b9334791ce7973bfa22f155f826e'
 
-    assert sb.hex_hash() == 'bb3f33ccf95415c396bd09d35325dbcbc7b067010d51c7ccf772a9e839c1e414'
+    assert sb.hex_hash() == '366b7ebfd293875425cfdf1dc75d00100a1973636a71f9d603c5218470f6f6b'
 
 
 def test_deterministic_superblock_selection(go_list_superblocks):
