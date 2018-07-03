@@ -44,9 +44,9 @@ def test_chaincoind():
         'verificationprogress',
         'initialblockdownload',
         'chainwork',
-		'size_on_disk',
-		'pruned',
-		'softforks'
+        'size_on_disk',
+        'pruned',
+        'softforks'
     ]
     for key in info_keys:
         assert key in info
