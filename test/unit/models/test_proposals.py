@@ -95,16 +95,4 @@ def test_proposal_is_expired(proposal):
     assert proposal.is_expired(superblockcycle=cycle) is True
 
 
-# deterministic ordering
-def test_approved_and_ranked(go_list_proposals):
-    from chaincoind import ChaincoinDaemon
-    chaincoind = ChaincoinDaemon.from_chaincoin_conf(config.chaincoin_conf)
-
-    for item in go_list_proposals:
-        (go, subobj) = GovernanceObject.import_gobject_from_chaincoind(chaincoind, item)
-
-    prop_list = Proposal.approved_and_ranked(chaincoind,proposal_quorum=1, next_superblock_max_budget=384)
-
-    assert prop_list[0].object_hash == u'd1ce73527d7cd6f2218f8ca893990bc7d5c6b9334791ce7973bfa22f155f826e'
-    assert prop_list[1].object_hash == u'7fa2798fee8ea74c3a369db72ae872096bd4e4714f1f5027c730ccfbf58aac02'
 
