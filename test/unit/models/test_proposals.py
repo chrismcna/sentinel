@@ -77,6 +77,7 @@ def proposal():
     #       We want to return an built, but unsaved, object
     return pobj
 
+
 def test_proposal_is_expired(proposal):
     cycle = 24  # testnet
     now = misc.now()
