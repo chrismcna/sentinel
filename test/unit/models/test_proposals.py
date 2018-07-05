@@ -77,8 +77,6 @@ def proposal():
     #       We want to return an built, but unsaved, object
     return pobj
 
-
-
 def test_proposal_is_expired(proposal):
     cycle = 24  # testnet
     now = misc.now()
@@ -93,6 +91,3 @@ def test_proposal_is_expired(proposal):
 
     proposal.end_epoch = now - 8281
     assert proposal.is_expired(superblockcycle=cycle) is True
-
-
-

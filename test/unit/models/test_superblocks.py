@@ -130,4 +130,3 @@ def test_serialisable_fields():
     s2.sort()
 
     assert s2 == s1
-

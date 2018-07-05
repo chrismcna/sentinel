@@ -5,6 +5,7 @@ os.environ['SENTINEL_CONFIG'] = os.path.normpath(os.path.join(os.path.dirname(__
 sys.path.append(os.path.normpath(os.path.join(os.path.dirname(__file__), '../../lib')))
 import config
 
+
 @pytest.fixture
 def valid_chaincoin_address(network='mainnet'):
     return 'ZH6bt95skGVco2t3gRuHggcSUrtRZ5BUsr' if (network == 'testnet') else 'CdZ4ndNjmdj4jx8pZoDU2dyDKmnev1iXYN'
