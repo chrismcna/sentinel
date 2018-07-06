@@ -46,8 +46,6 @@ class ChaincoinDaemon():
         return self.rpc_connection.__getattr__(params[0])(*params[1:])
 
     # common RPC convenience methods
-
-
     def get_masternodes(self):
         mnlist = self.rpc_command('masternodelist', 'full')
         return [Masternode(k, v) for (k, v) in mnlist.items()]
