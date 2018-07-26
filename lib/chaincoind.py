@@ -31,12 +31,10 @@ class ChaincoinDaemon():
         return AuthServiceProxy("http://{0}:{1}@{2}:{3}".format(*self.creds))
 
     @classmethod
-    def from_chaincoin_conf(self, chaincoin_dot_conf):
+    def from_conf(self, rpchost, rpcport, rpcuser, rpcpassword):
         from chaincoin_config import ChaincoinConfig
-        config_text = ChaincoinConfig.slurp_config_file(chaincoin_dot_conf)
+        config_text = ChaincoinConfig.slurp_config_file()
         creds = ChaincoinConfig.get_rpc_creds(config_text, config.network)
-
-        creds[u'host'] = config.rpc_host
 
         creds[u'host'] = config.rpc_host
 

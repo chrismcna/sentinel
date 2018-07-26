@@ -10,9 +10,9 @@ from misc import printdbg
 class ChaincoinConfig():
 
     @classmethod
-    def slurp_config_file(self, filename):
-        # read chaincoin.conf config but skip commented lines
-        f = io.open(filename)
+    def slurp_config_file(self):
+        # read sentinel.conf config but skip commented lines
+        f = io.open("sentinel.conf")
         lines = []
         for line in f:
             if re.match('^\s*#', line):
@@ -20,14 +20,14 @@ class ChaincoinConfig():
             lines.append(line)
         f.close()
 
-        # data is chaincoin.conf without commented lines
+        # data is sentinel.conf without commented lines
         data = ''.join(lines)
 
         return data
 
     @classmethod
     def get_rpc_creds(self, data, network='mainnet'):
-        # get rpc info from chaincoin.conf
+        # get rpc info from sentinel.conf
         match = re.findall(r'rpc(user|password|port)=(.*?)$', data, re.MULTILINE)
 
         # python >= 2.7
@@ -36,7 +36,7 @@ class ChaincoinConfig():
         # standard Chaincoin defaults...
         default_port = 11995 if (network == 'mainnet') else 21995
 
-        # use default port for network if not specified in chaincoin.conf
+        # use default port for network if not specified in sentinel.conf
         if not ('port' in creds):
             creds[u'port'] = default_port
 
@@ -47,10 +47,10 @@ class ChaincoinConfig():
         return creds
 
     @classmethod
-    def tokenize(self, filename):
+    def tokenize(self):
         tokens = {}
         try:
-            data = self.slurp_config_file(filename)
+            data = self.slurp_config_file()
             match = re.findall(r'(.*?)=(.*?)$', data, re.MULTILINE)
             tokens = {key: value for (key, value) in match}
         except IOError as e:

@@ -122,7 +122,7 @@ def is_chaincoind_port_open(chaincoind):
 
 
 def main():
-    chaincoind = ChaincoinDaemon.from_chaincoin_conf(config.chaincoin_conf)
+    chaincoind = ChaincoinDaemon.from_conf(config.get_rpchost(), config.get_rpcport(), config.get_rpcuser(), config.get_rpcpassword())
     options = process_args()
 
     # check chaincoind connectivity

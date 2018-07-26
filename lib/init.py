@@ -56,23 +56,23 @@ def is_database_correctly_configured():
     return configured
 
 
-def has_chaincoin_conf():
+def has_sentinel_conf():
     import config
     import io
 
-    valid_chaincoin_conf = False
+    valid_sentinel_conf = False
 
-    # ensure chaincoin_conf exists & readable
+    # ensure sentinel.conf exists & readable
     #
     # if not, print a message stating that Chaincoin Core must be installed and
-    # configured, including JSONRPC access in chaincoin.conf
+    # configured, including JSONRPC access in sentinel.conf
     try:
-        f = io.open(config.chaincoin_conf)
-        valid_chaincoin_conf = True
+        f = io.open("sentinel.conf")
+        valid_sentinel_conf = True
     except IOError as e:
         print(e)
 
-    return valid_chaincoin_conf
+    return valid_sentinel_conf
 
 
 # === begin main
@@ -94,8 +94,8 @@ def main():
         print("Please ensure correct database configuration.")
         sys.exit(1)
 
-    if not has_chaincoin_conf():
-        print("ChaincoinCore must be installed and configured, including JSONRPC access in chaincoin.conf")
+    if not has_sentinel_conf():
+        print("Chaincoin Core must be installed and configured, and sentinel.conf need specify the RPC credentials")
         sys.exit(1)
 
 

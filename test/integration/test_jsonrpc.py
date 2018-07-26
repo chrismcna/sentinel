@@ -13,7 +13,7 @@ from chaincoin_config import ChaincoinConfig
 
 
 def test_chaincoind():
-    config_text = ChaincoinConfig.slurp_config_file(config.chaincoin_conf)
+    config_text = ChaincoinConfig.slurp_config_file()
     network = 'mainnet'
     chain = 'main'
     is_testnet = False

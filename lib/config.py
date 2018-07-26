@@ -9,24 +9,9 @@ default_sentinel_config = os.path.normpath(
     os.path.join(os.path.dirname(__file__), '../sentinel.conf')
 )
 sentinel_config_file = os.environ.get('SENTINEL_CONFIG', default_sentinel_config)
-sentinel_cfg = ChaincoinConfig.tokenize(sentinel_config_file)
+sentinel_cfg = ChaincoinConfig.tokenize()
 sentinel_version = "1.1.0"
 min_chaincoind_proto_version_with_sentinel_ping = 70015
-
-
-def get_chaincoin_conf():
-    if sys.platform == 'win32':
-        chaincoin_conf = os.path.join(os.getenv('APPDATA'), "Chaincoin/chaincoin.conf")
-    else:
-        home = os.environ.get('HOME')
-
-        chaincoin_conf = os.path.join(home, ".chaincoincore/chaincoin.conf")
-        if sys.platform == 'darwin':
-            chaincoin_conf = os.path.join(home, "Library/Application Support/Chaincoin/chaincoin.conf")
-
-    chaincoin_conf = sentinel_cfg.get('chaincoin_conf', chaincoin_conf)
-
-    return chaincoin_conf
 
 
 def get_network():
@@ -35,6 +20,25 @@ def get_network():
 
 def get_rpchost():
     return sentinel_cfg.get('rpchost', '127.0.0.1')
+
+
+def get_rpcport():
+
+    # standard Chaincoin defaults...
+    default_port = 11995 if (get_network == 'mainnet') else 21995
+
+    if not ('rpcport' in sentinel_cfg):
+        return default_port
+    else:
+        return sentinel_cfg.get('rpcport')
+
+
+def get_rpcuser():
+    return sentinel_cfg.get('rpcuser', 'user')
+
+
+def get_rpcpassword():
+    return sentinel_cfg.get('rpcpassword', 'pass')
 
 
 def sqlite_test_db_name(sqlite_file_path):
@@ -86,7 +90,9 @@ def get_db_conn():
     return db
 
 
-chaincoin_conf = get_chaincoin_conf()
 network = get_network()
 rpc_host = get_rpchost()
+rpc_port = get_rpcport()
+rpc_user = get_rpcuser()
+rpc_password = get_rpcpassword()
 db = get_db_conn()
