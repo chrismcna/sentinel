@@ -39,7 +39,18 @@ When just upgrading, also remove the virtual environment:
     $ git pull
     $ rm -rf venv && virtualenv ./venv && ./venv/bin/pip install -r requirements.txt
 
-### 3. Set up Cron
+### 3. Configuration
+
+Connection details bave to be specified in `sentinel.conf`:
+
+    rpcuser=<rpcuser>
+    rpcpass=<password>
+    rpcport=<default>
+    rpchost=<Host IP>
+
+It is recommended use rpcauth for the RPC connection: https://github.com/chaincoin/chaincoin/tree/master/share/rpcauth
+
+### 4. Set up Cron
 
 Set up a crontab entry to call Sentinel every minute:
 
@@ -49,19 +60,13 @@ In the crontab editor, add the lines below, replacing '/home/YOURUSERNAME/sentin
 
     * * * * * cd /home/YOURUSERNAME/sentinel && ./venv/bin/python bin/sentinel.py >/dev/null 2>&1
 
-### 4. Test the Configuration
+### 5. Test the Installation
 
 Test the config by runnings all tests from the sentinel folder you cloned into
 
     $ ./venv/bin/py.test ./test
 
 With all tests passing and crontab setup, Sentinel will stay in sync with chaincoind and the installation is complete
-
-## Configuration
-
-An alternative (non-default) path to the `chaincoin.conf` file can be specified in `sentinel.conf`:
-
-    chaincoin_conf=/path/to/chaincoin.conf
 
 ## Troubleshooting
 
