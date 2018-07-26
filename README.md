@@ -41,7 +41,7 @@ When just upgrading, also remove the virtual environment:
 
 ### 3. Configuration
 
-Connection details bave to be specified in `sentinel.conf`:
+Connection details have to be specified in `sentinel.conf`:
 
     rpcuser=<rpcuser>
     rpcpass=<password>
