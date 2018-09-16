@@ -59,7 +59,7 @@ Download Sentinel repo and extract to folder:
 
     https://github.com/chaincoin/sentinel/archive/master.zip
 
-Install Python dependencies:
+Install Python dependencies, open command prompt in sentinel folder:
 
     virtualenv venv && venv\Scripts\pip install -r requirements.txt
 
@@ -74,7 +74,7 @@ Connection details have to be specified in `sentinel.conf`:
 
 It is recommended use rpcauth for the RPC connection: https://github.com/chaincoin/chaincoin/tree/master/share/rpcauth
 
-### 4. Set up Scheduelr
+### 4. Set up Scheduler
 
 #### Ubuntu - Cron
 
