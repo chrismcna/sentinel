@@ -35,7 +35,7 @@ Make sure Python version 2.7.15 or above is installed and added to PATH environm
 
     python --version
 
-Update system packages and ensure virtualenv is installed:
+Ensure virtualenv is installed:
 
     pip install virtualenv
 
