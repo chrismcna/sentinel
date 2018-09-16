@@ -102,7 +102,7 @@ Test the config by runnings all tests from the sentinel folder you cloned into
 
     $ ./venv/bin/py.test ./test
 
-With all tests passing and crontab setup, Sentinel will stay in sync with chaincoind and the installation is complete
+With all tests passing and windows task setup, Sentinel will stay in sync with chaincoind and the installation is complete
 
 #### Windows
 
